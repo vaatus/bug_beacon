@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::224072239267:role/eksctl-efk-demo-nodegroup-ng-a4bd9-NodeInstanceRole-3uUItYFJXf5U
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::224072239267:user/admin
+      username: admin
+      groups:
+      - system:masters
+
+
+kubectl apply -f aws-auth-configmap.yaml

@@ -1,0 +1,12 @@
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+
+connect to the node:
+
+aws ssm start-session --target <instance_id>
+
+Create snapshot driver addon:
+eksctl create addon --cluster efk-demo --name snapshot-controller --version latest
