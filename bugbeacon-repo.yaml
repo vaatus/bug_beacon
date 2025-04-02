@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: bugbeacon-repo
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: bugbeacon-repo-auth
+  url: https://github.com/vaatus/bug_beacon
