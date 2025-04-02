@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  interval: 1m
+  # The path in YOUR repository where Flux should look for other Kustomizations.
+  path: "./clusters/efk-demo/flux-system"  
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: bugbeacon_repo
+    namespace: flux-system
