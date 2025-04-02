@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: elasticsearch
+  namespace: efk-monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: elasticsearch
+      version: "8.7.1"       # Adjust as needed
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: flux-system
+      interval: 1m
+  install:
+    remediation:
+      retries: 3
+    createNamespace: true   # Create efk-monitoring if not existing
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    replicas: 3
+    # Example of enabling persistence:
+    volumeClaimTemplate:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi

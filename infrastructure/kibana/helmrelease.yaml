@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kibana
+  namespace: efk-monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kibana
+      version: "8.7.1"      # Adjust to match your ES version
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: flux-system
+      interval: 1m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    elasticsearchHosts: "http://elasticsearch-master.efk-monitoring:9200"
+    # If ES is secured, you'd add credentials via environment variables or secrets

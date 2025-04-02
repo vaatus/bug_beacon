@@ -1,0 +1,33 @@
+alertmanager:
+  enabled: true
+
+prometheus:
+  enabled: true
+  prometheusSpec:
+    retention: 7d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+grafana:
+  enabled: true
+  adminPassword: admin  # For testing only
+  persistence:
+    enabled: true
+    storageClassName: gp2
+    accessModes: ["ReadWriteOnce"]
+    size: 5Gi
+
+kubeControllerManager:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
